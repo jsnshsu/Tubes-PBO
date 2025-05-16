@@ -1,0 +1,48 @@
+/* src/login.css */
+.login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to bottom, #000000, #3b2b0d);
+    height: 100vh;
+    color: white;
+  }
+  
+  .login-modal {
+    background-color: #1a1a1a;
+    padding: 40px;
+    border-radius: 12px;
+    width: 400px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.6);
+  }
+  
+  .login-modal h2 {
+    margin-bottom: 20px;
+    font-size: 28px;
+  }
+  
+  .login-modal input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+  }
+  
+  .btn-login {
+    width: 100%;
+    padding: 10px;
+    background-color: #f4c13d;
+    color: black;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .signup-link {
+    color: #f4c13d;
+    cursor: pointer;
+  }
+  

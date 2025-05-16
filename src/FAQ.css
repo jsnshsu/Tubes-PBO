@@ -1,0 +1,159 @@
+.faq-page {
+  background: linear-gradient(to bottom, #000000, #3b2b0d);
+  color: white;
+  min-height: 100vh;
+}
+
+.faq-page body {
+    background: linear-gradient(to bottom, #000000, #3b2b0d);
+    color: white;
+    min-height: 100vh;
+}
+
+.faq-page header {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    height: 100px;
+    background: transparent;
+    z-index: 1;
+}
+
+.faq-page .logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+    z-index: 2;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.faq-page .right-side {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    z-index: 2;
+}
+
+.faq-page .menu {
+    display: flex;
+    gap: 24px;
+}
+
+.faq-page .menu-item {
+    font-weight: 600;
+    color: black;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    transition: 0.3s;
+}
+
+.faq-page .menu-item:hover {
+    opacity: 0.8;
+    color: white;
+}
+
+.faq-page .auth {
+    display: flex;
+    gap: 1rem;
+}
+
+.faq-page .header-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #f4c13d;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    z-index: -1;
+}
+
+.faq-page .header-bg-black {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+    clip-path: polygon(0 0, 25% 100%, 0 100%);
+    z-index: 0;
+}
+
+.faq-page .container {
+    color: white;
+    padding-top: 20px;
+    margin: 10px;
+    max-width: 1000px;
+    padding: 2px;
+}
+
+.faq-page h2 {
+    font-size: 30px;
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+
+.faq-page .faq-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #f3c544;
+    text-align: left;
+    padding-left: 0;
+    text-align: left;
+}
+
+.faq-page .faq-section {
+    margin-top: 1rem;
+    text-align: left;
+    padding-left: 0;
+}
+
+.faq-page details {
+    background-color: #3e3e3e;
+    color: white;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: left;
+}
+
+.faq-page details:hover {
+    background-color: #5a5a5a;
+}
+
+.faq-page summary {
+    font-weight: bold;
+    list-style: none;
+}
+
+.faq-page summary::-webkit-details-marker {
+    display: none;
+}
+
+.faq-page details[open] summary:after {
+    content: "▲";
+    float: right;
+    font-size: 0.8rem;
+    color: #f3c544;
+}
+
+.faq-page summary:after {
+    content: "▼";
+    float: right;
+    font-size: 0.8rem;
+    color: #f3c544;
+}
+
+.faq-page details p {
+    margin-top: 1rem;
+    font-weight: normal;
+    color: #e0e0e0;
+}
