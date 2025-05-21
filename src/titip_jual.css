@@ -1,0 +1,132 @@
+.titip-jual-page {
+  background: linear-gradient(to bottom, #000000, #3b2b0d);
+  color: white;
+  min-height: 100vh;
+}
+
+.titip-jual-page header {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  height: 100px;
+  background: transparent;
+  z-index: 1;
+}
+
+.titip-jual-page .logo {
+  font-size: 28px;
+  font-weight: bold;
+  color: white;
+  z-index: 2;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.titip-jual-page .right-side {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  z-index: 2;
+}
+
+.titip-jual-page .menu {
+  display: flex;
+  gap: 24px;
+}
+
+.titip-jual-page .menu-item {
+  font-weight: 600;
+  color: black;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  transition: 0.3s;
+}
+
+.titip-jual-page .menu-item:hover {
+  opacity: 0.8;
+  color: white;
+}
+
+.titip-jual-page .auth {
+  display: flex;
+  gap: 1rem;
+}
+
+.titip-jual-page .header-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #f4c13d;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  z-index: -1;
+}
+
+.titip-jual-page .header-bg-black {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000000;
+  clip-path: polygon(0 0, 25% 100%, 0 100%);
+  z-index: 0;
+}
+
+.titip-jual-page .form-title {
+  font-size: 30px;
+  text-align: center;
+  margin: 40px 0 20px 0;
+}
+
+.titip-jual-page .form-container {
+  max-width: 600px;
+  margin: auto;
+  padding: 1rem;
+}
+
+.titip-jual-page .form-group {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.titip-jual-page .form-group label {
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #f4c13d;
+}
+
+.titip-jual-page .form-input {
+  padding: 10px;
+  border-radius: 4px;
+  border: none;
+  font-size: 16px;
+}
+
+.titip-jual-page .submit-button {
+  background-color: #f4c13d;
+  color: black;
+  font-weight: bold;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.titip-jual-page .submit-button:hover {
+  background-color: #ffdb6e;
+}
+
+.titip-jual-page .preview-image {
+  margin-top: 10px;
+  max-width: 100%;
+  border-radius: 6px;
+  border: 1px solid #fff;
+}
