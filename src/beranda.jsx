@@ -12,42 +12,28 @@ const Card = ({ title, category, price, dateRange }) => (
     </div>
     <h3 className="card-title">{title}</h3>
     <p className="card-category">{category}</p>
-    <p className="card-price">{price}</p>
+    <p className="card-price">{`Rp ${price.toLocaleString('id-ID')},-`}</p>
     <p className="card-date">🗓️ {dateRange}</p>
   </div>
 );
 
 export default function Beranda() {
   const [items, setItems] = useState([]);
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    // Simulasi ambil data dari backend
     const fetchData = async () => {
-      const data = [
-        {
-          id: 1,
-          title: "Skibidi",
-          category: "Animasi",
-          price: "Rp 500.000,-",
-          dateRange: "12/05/2025 - 14/05/2025",
-        },
-        {
-          id: 2,
-          title: "Camera Canon EOS",
-          category: "Elektronik",
-          price: "Rp 3.200.000,-",
-          dateRange: "10/05/2025 - 12/05/2025",
-        },
-        {
-          id: 3,
-          title: "Sepatu Nike Jordan",
-          category: "Fashion",
-          price: "Rp 1.500.000,-",
-          dateRange: "11/05/2025 - 13/05/2025",
+      try {
+        const res = await fetch('http://localhost:3001/api/items');
+        if (!res.ok) {
+          throw new Error('Gagal mengambil data dari server');
         }
-      ];
-
-      setItems(data);
+        const data = await res.json();
+        setItems(data);
+      } catch (err) {
+        setError(err.message);
+        console.error(err);
+      }
     };
 
     fetchData();
@@ -55,7 +41,6 @@ export default function Beranda() {
 
   return (
     <div className="beranda-wrapper">
-      {/* Header Sama Seperti Dashboard */}
       <header>
         <h1 className="logo">EZBID</h1>
 
@@ -75,7 +60,6 @@ export default function Beranda() {
         <div className="header-bg-black"></div>
       </header>
 
-      {/* Konten Utama */}
       <div className="beranda-content">
         <div className="filter-section">
           <select className="filter-dropdown">
@@ -86,17 +70,21 @@ export default function Beranda() {
           </select>
         </div>
 
-        <div className="card-grid">
-          {items.map(item => (
-            <Card
-              key={item.id}
-              title={item.title}
-              category={item.category}
-              price={item.price}
-              dateRange={item.dateRange}
-            />
-          ))}
-        </div>
+        {error ? (
+          <p style={{ color: 'red' }}>{error}</p>
+        ) : (
+          <div className="card-grid">
+            {items.map(item => (
+              <Card
+                key={item.id}
+                title={item.title}
+                category={item.category}
+                price={item.price}
+                dateRange={item.dateRange}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

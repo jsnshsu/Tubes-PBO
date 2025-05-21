@@ -12,51 +12,37 @@ const Card = ({ title, category, price, dateRange }) => (
     </div>
     <h3 className="card-title">{title}</h3>
     <p className="card-category">{category}</p>
-    <p className="card-price">{price}</p>
+    <p className="card-price">{`Rp ${price.toLocaleString('id-ID')},-`}</p>
     <p className="card-date">🗓️ {dateRange}</p>
   </div>
 );
 
 const BerandaLogin = () => {
   const [items, setItems] = useState([]);
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    // Simulasi fetch data dari backend
-    const fetchData = () => {
-      const data = [
-        {
-          id: 1,
-          title: "Skibidi",
-          category: "Animasi",
-          price: "Rp 500.000,-",
-          dateRange: "12/05/2025 - 14/05/2025",
-        },
-        {
-          id: 2,
-          title: "Camera Canon EOS",
-          category: "Elektronik",
-          price: "Rp 3.200.000,-",
-          dateRange: "10/05/2025 - 12/05/2025",
-        },
-        {
-          id: 3,
-          title: "Sepatu Nike Jordan",
-          category: "Fashion",
-          price: "Rp 1.500.000,-",
-          dateRange: "11/05/2025 - 13/05/2025",
+    const fetchItems = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/api/items');
+        if (!response.ok) {
+          throw new Error('Gagal mengambil data');
         }
-      ];
-      setItems(data);
+        const data = await response.json();
+        setItems(data);
+      } catch (err) {
+        setError(err.message);
+        console.error(err);
+      }
     };
 
-    fetchData();
+    fetchItems();
   }, []);
 
   return (
     <div className="beranda-wrapper">
       <header>
         <h1 className="logo">EZBID</h1>
-
         <nav className="right-side">
           <div className="menu">
             <Link to="/beranda_login" className="menu-item">Beranda</Link>
@@ -64,11 +50,10 @@ const BerandaLogin = () => {
             <Link to="/FAQ" className="menu-item">FAQ</Link>
           </div>
           <div className="logo">
-            <Link to="#" ><img src='/Bell.svg' alt="Notifikasi" className='notif' /></Link>
-            <Link to="#" ><img src='/account_circle.svg' alt="Profil" className='profil' /></Link>
+            <Link to="#"><img src='/Bell.svg' alt="Notifikasi" className='notif' /></Link>
+            <Link to="/ProfileSettings"><img src='/account_circle.svg' alt="Profil" className='profil' /></Link>
           </div>
         </nav>
-
         <div className="header-bg"></div>
         <div className="header-bg-black"></div>
       </header>
@@ -89,17 +74,21 @@ const BerandaLogin = () => {
           </select>
         </div>
 
-        <div className="card-grid">
-          {items.map(item => (
-            <Card
-              key={item.id}
-              title={item.title}
-              category={item.category}
-              price={item.price}
-              dateRange={item.dateRange}
-            />
-          ))}
-        </div>
+        {error ? (
+          <p style={{ color: 'red' }}>{error}</p>
+        ) : (
+          <div className="card-grid">
+            {items.map(item => (
+              <Card
+                key={item.id}
+                title={item.title}
+                category={item.category}
+                price={item.price}
+                dateRange={item.dateRange}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
