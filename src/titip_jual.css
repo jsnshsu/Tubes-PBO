@@ -109,6 +109,13 @@
   font-size: 16px;
 }
 
+.titip-jual-page .form-buttons {
+  display: flex;
+  gap: 5px; 
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
 .titip-jual-page .submit-button {
   background-color: #f4c13d;
   color: black;
@@ -121,6 +128,21 @@
 }
 
 .titip-jual-page .submit-button:hover {
+  background-color: #ffdb6e;
+}
+
+.titip-jual-page .preview-btn {
+  background-color: #f4c13d;
+  color: black;
+  font-weight: bold;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.titip-jual-page .review-btn:hover {
   background-color: #ffdb6e;
 }
 

@@ -3,12 +3,60 @@ import './titip_jual.css';
 import { Link } from 'react-router-dom';
 
 const Titipjual = () => {
-  const [image, setImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
+  const [imageFile, setImageFile] = useState(null);
+  const [formData, setFormData] = useState({
+    namaBarang: '',
+    kategori: '',
+    hargaAwal: '',
+    kelipatanLelang: '',
+    mulaiLelang: '',
+    akhirLelang: '',
+    deskripsi: '',
+    status: '',
+  });
 
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
     if (file) {
-      setImage(URL.createObjectURL(file));
+      setImagePreview(URL.createObjectURL(file));
+      setImageFile(file);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = new FormData();
+
+    // Append form fields
+    for (const key in formData) {
+      data.append(key, formData[key]);
+    }
+
+    // Append image file
+    if (imageFile) {
+      data.append('foto', imageFile);
+    }
+
+    try {
+      const response = await fetch('http://localhost:8080/nama-aplikasi/titipjual', {
+        method: 'POST',
+        body: data,
+      });
+
+      if (response.ok) {
+        alert('Barang berhasil dititipkan!');
+      } else {
+        alert('Gagal mengirim data.');
+      }
+    } catch (error) {
+      console.error('Error saat mengirim data:', error);
+      alert('Terjadi kesalahan saat mengirim data.');
     }
   };
 
@@ -36,62 +84,65 @@ const Titipjual = () => {
       <main>
         <h2 className="form-title">Form Titip Jual Barang</h2>
         <div className="form-container">
-          <form className="titip-form">
+          <form className="titip-form" onSubmit={handleSubmit}>
             <div className="form-group">
               <label>Nama Barang</label>
-              <input type="text" className="form-input" placeholder="Nama barang" />
+              <input type="text" name="namaBarang" className="form-input" placeholder="Nama barang" onChange={handleChange} />
             </div>
 
             <div className="form-group">
               <label>Kategori Barang</label>
-              <select className="form-input">
-                <option>Pilih Kategori</option>
-                {/* Tambahkan opsi kategori lainnya */}
+              <select name="kategori" className="form-input" onChange={handleChange}>
+                <option value="">Pilih Kategori</option>
+                <option value="Elektronik">Elektronik</option>
+                <option value="Pakaian">Pakaian</option>
+                <option value="Aksesoris">Aksesoris</option>
               </select>
             </div>
 
             <div className="form-group">
               <label>Harga Awal</label>
-              <input type="number" className="form-input" placeholder="Harga Awal" />
+              <input type="number" name="hargaAwal" className="form-input" placeholder="Harga Awal" onChange={handleChange} />
             </div>
 
             <div className="form-group">
               <label>Kelipatan Lelang</label>
-              <input type="number" className="form-input" placeholder="Kelipatan Lelang" />
+              <input type="number" name="kelipatanLelang" className="form-input" placeholder="Kelipatan Lelang" onChange={handleChange} />
             </div>
 
             <div className="form-group">
               <label>Tanggal & Waktu Mulai Lelang</label>
-              <input type="datetime-local" className="form-input" />
+              <input type="datetime-local" name="mulaiLelang" className="form-input" onChange={handleChange} />
             </div>
 
             <div className="form-group">
               <label>Tanggal & Waktu Akhir Lelang</label>
-              <input type="datetime-local" className="form-input" />
+              <input type="datetime-local" name="akhirLelang" className="form-input" onChange={handleChange} />
             </div>
 
             <div className="form-group">
               <label>Deskripsi / Detail Barang</label>
-              <textarea className="form-input" placeholder="Detail Barang"></textarea>
+              <textarea name="deskripsi" className="form-input" placeholder="Detail Barang" onChange={handleChange}></textarea>
             </div>
 
             <div className="form-group">
               <label>Foto Barang</label>
               <input type="file" accept="image/*" onChange={handleImageChange} className="form-input" />
-              {image && <img src={image} alt="Preview" className="preview-image" />}
+              {imagePreview && <img src={imagePreview} alt="Preview" className="preview-image" />}
             </div>
 
             <div className="form-group">
               <label>Status Barang</label>
-              <select className="form-input">
-                <option>Pilih Status</option>
-                {/* Tambahkan opsi status lainnya */}
+              <select name="status" className="form-input" onChange={handleChange}>
+                <option value="">Pilih Status</option>
+                <option value="Baru">Baru</option>
+                <option value="Bekas">Bekas</option>
               </select>
             </div>
 
             <div className="form-buttons">
-              <button type="button" className="preview-btn">Preview</button>
-              <button type="submit" className="submit-button">Submit</button>
+              <button type='button' className='preview-btn'>Preview</button>
+              <button type='submit' className='submit-button'>Submit</button>
             </div>
           </form>
         </div>

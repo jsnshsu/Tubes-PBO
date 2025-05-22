@@ -23,16 +23,29 @@ const BerandaLogin = () => {
 
   useEffect(() => {
     const fetchItems = async () => {
+      
       try {
         const response = await fetch('http://localhost:3001/api/items');
         if (!response.ok) {
           throw new Error('Gagal mengambil data');
         }
         const data = await response.json();
+        console.log('Data dari API:', data);
         setItems(data);
       } catch (err) {
+        console.error('Error fetch:', err);
+        const dummyData = [
+        {
+          id: 1,
+          title: 'Smartphone Samsung Galaxy S21',
+          category: 'Elektronik',
+          price: 7500000,
+          dateRange: '01 Mei 2025 - 10 Mei 2025',
+        },
+      ];
+        setItems(dummyData);
         setError(err.message);
-        console.error(err);
+        // console.error(err);
       }
     };
 
