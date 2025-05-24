@@ -18,6 +18,10 @@ import Titipjual from './titip_jual.jsx';
 import './titip_jual.css';
 import ProfileSettings from './ProfileSettings.jsx';
 import './ProfileSettings.css';
+import Notif from './notif.jsx'
+import './notif.css';
+import Lelang from './lelang.jsx';
+import './lelang.css';
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -32,6 +36,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/FAQ" element={<FAQ />} />
         <Route path="/titip_jual" element={<Titipjual />} />
         <Route path="/ProfileSettings" element={<ProfileSettings />} />
+        <Route path="/notif" element={<Notif />} />
+        <Route path="/lelang" element={<Lelang />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

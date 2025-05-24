@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import './beranda_login.css';
 
 const Card = ({ title, category, price, dateRange }) => (
+  // <Link to="/DetailLelang" className="card-link"></Link>
   <div className="card">
     <div className="card-image"></div>
     <div className="card-indicators">
@@ -59,11 +60,11 @@ const BerandaLogin = () => {
         <nav className="right-side">
           <div className="menu">
             <Link to="/beranda_login" className="menu-item">Beranda</Link>
-            <Link to="#" className="menu-item">Titip Jual</Link>
+            <Link to="/titip_jual" className="menu-item">Titip Jual</Link>
             <Link to="/FAQ" className="menu-item">FAQ</Link>
           </div>
           <div className="logo">
-            <Link to="#"><img src='/Bell.svg' alt="Notifikasi" className='notif' /></Link>
+            <Link to="/notif"><img src='/Bell.svg' alt="Notifikasi" className='notif' /></Link>
             <Link to="/ProfileSettings"><img src='/account_circle.svg' alt="Profil" className='profil' /></Link>
           </div>
         </nav>
@@ -87,9 +88,9 @@ const BerandaLogin = () => {
           </select>
         </div>
 
-        {error ? (
+        {/* {error ? (
           <p style={{ color: 'red' }}>{error}</p>
-        ) : (
+        ) : ( */}
           <div className="card-grid">
             {items.map(item => (
               <Card
@@ -101,7 +102,7 @@ const BerandaLogin = () => {
               />
             ))}
           </div>
-        )}
+        {/* )} */}
       </div>
     </div>
   );
