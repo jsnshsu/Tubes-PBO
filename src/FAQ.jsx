@@ -23,6 +23,7 @@ const FAQ = () => {
       </header>
 
       <main>
+        <center>
         <h2>Frequently Asked Question.</h2>
         <div className="container"> 
           {/* Konten FAQ */}
@@ -78,6 +79,7 @@ const FAQ = () => {
           </div>
           </div>
         </div>
+        </center>
       </main>
     </div>
   );
