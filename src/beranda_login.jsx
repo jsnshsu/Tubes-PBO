@@ -3,19 +3,20 @@ import { Link } from 'react-router-dom';
 import './beranda_login.css';
 
 const Card = ({ title, category, price, dateRange }) => (
-  // <Link to="/DetailLelang" className="card-link"></Link>
-  <div className="card">
-    <div className="card-image"></div>
-    <div className="card-indicators">
-      {[...Array(5)].map((_, i) => (
-        <div key={i} className="indicator"></div>
-      ))}
+  <Link to="/lelang" className="card-link">
+    <div className="card">
+      <div className="card-image"></div>
+      <div className="card-indicators">
+        {[...Array(5)].map((_, i) => (
+          <div key={i} className="indicator"></div>
+        ))}
+      </div>
+      <h3 className="card-title">{title}</h3>
+      <p className="card-category">{category}</p>
+      <p className="card-price">{`Rp ${price.toLocaleString('id-ID')},-`}</p>
+      <p className="card-date">🗓️ {dateRange}</p>
     </div>
-    <h3 className="card-title">{title}</h3>
-    <p className="card-category">{category}</p>
-    <p className="card-price">{`Rp ${price.toLocaleString('id-ID')},-`}</p>
-    <p className="card-date">🗓️ {dateRange}</p>
-  </div>
+  </Link>
 );
 
 const BerandaLogin = () => {
@@ -26,7 +27,7 @@ const BerandaLogin = () => {
     const fetchItems = async () => {
       
       try {
-        const response = await fetch('http://localhost:3001/api/items');
+        const response = await fetch('http://localhost:3001/product/items');
         if (!response.ok) {
           throw new Error('Gagal mengambil data');
         }

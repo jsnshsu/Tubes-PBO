@@ -1,0 +1,108 @@
+.detail-container {
+  display: flex;
+  padding: 40px 60px;
+  gap: 30px;
+}
+
+.detail-left, .detail-right {
+  background-color: white;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  flex: 1;
+}
+
+.product-img {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+.status-active {
+  background-color: green;
+  color: white;
+  padding: 4px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.harga-dasar, .kontak {
+  margin: 8px 0;
+  font-weight: bold;
+}
+
+.lelang-info p {
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.deskripsi h4 {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #333;
+}
+
+.deskripsi p {
+  font-size: 14px;
+  color: #444;
+}
+
+.detail-right h3 {
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.detail-right ul {
+  list-style: none;
+  padding-left: 0;
+  font-size: 15px;
+  margin-bottom: 20px;
+}
+
+.detail-right ul li {
+  margin-bottom: 10px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 6px;
+}
+
+.detail-right ul li span {
+  display: block;
+  font-size: 12px;
+  color: gray;
+}
+
+.input-bid {
+  display: flex;
+  gap: 10px;
+}
+
+.input-bid input {
+  flex: 1;
+  padding: 10px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+.input-bid button {
+  background-color: #FFD700;
+  border: none;
+  padding: 10px 20px;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.input-bid button:hover {
+  background-color: #f0c000;
+}
+
+@media (max-width: 768px) {
+  .detail-container {
+    flex-direction: column;
+    padding: 20px;
+  }
+}

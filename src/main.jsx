@@ -22,6 +22,8 @@ import Notif from './notif.jsx'
 import './notif.css';
 import Lelang from './lelang.jsx';
 import './lelang.css';
+import Preview from './preview.jsx'
+import './preview.css';
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -38,6 +40,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/ProfileSettings" element={<ProfileSettings />} />
         <Route path="/notif" element={<Notif />} />
         <Route path="/lelang" element={<Lelang />} />
+        <Route path="/preview" element={<Preview/>}></Route>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

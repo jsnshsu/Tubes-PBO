@@ -1,6 +1,6 @@
 import './dashboard.css';
 import Ilustrasi from "./assets/dashboard.png";
-import React from 'react';
+
 import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
