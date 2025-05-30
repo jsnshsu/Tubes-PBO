@@ -141,7 +141,7 @@ const Titipjual = () => {
             </div>
 
             <div className="form-buttons">
-              <Link type='button' className='preview-btn'>Preview</Link>
+              <Link to='/preview' type='button' className='preview-btn'>Preview</Link>
               <button type='submit' className='submit-button'>Submit</button>
             </div>
           </form>

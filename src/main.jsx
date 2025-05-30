@@ -24,6 +24,8 @@ import Lelang from './lelang.jsx';
 import './lelang.css';
 import Preview from './preview.jsx'
 import './preview.css';
+import ACCtransaksi from './ACCtransaksi.jsx';
+import './ACCtransaksi.css';
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -41,6 +43,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/notif" element={<Notif />} />
         <Route path="/lelang" element={<Lelang />} />
         <Route path="/preview" element={<Preview/>}></Route>
+        <Route path="/ACCtransaksi" element={<ACCtransaksi />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
