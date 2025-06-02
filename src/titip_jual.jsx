@@ -68,11 +68,11 @@ const Titipjual = () => {
         <nav className="right-side">
           <div className="menu">
             <Link to="/beranda_login" className="menu-item">Beranda</Link>
-            <Link to="#" className="menu-item">Titip Jual</Link>
+            <Link to="titp_jual" className="menu-item">Titip Jual</Link>
             <Link to="/FAQ" className="menu-item">FAQ</Link>
           </div>
           <div className="auth">
-            <Link to="#"><img src='/Bell.svg' alt="Notifikasi" className='notif' /></Link>
+            <Link to="/notif"><img src='/Bell.svg' alt="Notifikasi" className='notif' /></Link>
             <Link to="/ProfileSettings"><img src='/account_circle.svg' alt="Profil" className='profil' /></Link>
           </div>
         </nav>

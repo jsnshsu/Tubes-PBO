@@ -127,13 +127,15 @@ body {
   padding: 15px 20px;
   cursor: pointer;
   color: white;
+  text-decoration: none;
 }
 
-.sidebar-item.active {
+.sidebar-item:hover {
   background-color: #ffcc47;
   color: black;
   border-radius: 5px;
   font-weight: bold;
+  text-decoration: none;
 }
 
 .sidebar-item.logout {

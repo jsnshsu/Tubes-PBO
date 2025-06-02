@@ -68,10 +68,10 @@ const ProfileSettings = () => {
 
       <div className="profile-page">
         <div className="sidebar">
-          <div className="sidebar-item active">Pengaturan Profil</div>
-          <div className="sidebar-item">Transaksi</div>
-          <div className="sidebar-item">Listing</div>
-          <div className="sidebar-item logout">Log out</div>
+          <Link to='/ProfileSettings'className='sidebar-item'>Pengaturan Profil</Link>
+          <Link to='/ACCtransaksi' className='sidebar-item'> Transaksi</Link>
+          <Link to='#' className='sidebar-item'>Listing</Link>
+          <Link to='#' className='sidebar-item'>Logout</Link>
         </div>
 
         <div className="profile-content">
