@@ -1,0 +1,239 @@
+.transaction-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.transaction-modal {
+  background: #2a2a2a;
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 800px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.close-button {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.close-button:hover {
+  color: #ccc;
+}
+
+.transaction-content {
+  display: flex;
+  gap: 24px;
+  margin-top: 16px;
+}
+
+.product-section {
+  flex: 1;
+}
+
+.main-image {
+  background: white;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-image img {
+  max-width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+}
+
+.thumbnail-navigation {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-button {
+  background: #444;
+  border: none;
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-button:hover {
+  background: #555;
+}
+
+.thumbnails {
+  display: flex;
+  gap: 8px;
+  flex: 1;
+  justify-content: center;
+}
+
+.thumbnail {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.thumbnail:hover {
+  border-color: #ffa500;
+}
+
+.transaction-details {
+  flex: 1;
+  color: white;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+.status-badge.not-paid {
+  background-color: #dc3545;
+  color: white;
+}
+
+.product-name {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 24px;
+  color: white;
+}
+
+.transaction-info {
+  margin-bottom: 24px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+.label {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.value {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.seller-info {
+  background: #3a3a3a;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 24px;
+}
+
+.seller-detail {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+}
+
+.seller-detail:last-child {
+  margin-bottom: 0;
+}
+
+.seller-label {
+  font-size: 14px;
+  color: #ccc;
+  margin-bottom: 4px;
+}
+
+.seller-value {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.payment-section {
+  display: flex;
+  gap: 12px;
+}
+
+.payment-input {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #555;
+  border-radius: 4px;
+  background: #444;
+  color: white;
+  font-size: 14px;
+}
+
+.payment-input::placeholder {
+  color: #999;
+}
+
+.submit-button {
+  background: #ffa500;
+  color: black;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background: #ff8c00;
+}
+
+.loading,
+.error {
+  color: white;
+  text-align: center;
+  padding: 40px;
+  font-size: 18px;
+}
+
+@media (max-width: 768px) {
+  .transaction-content {
+    flex-direction: column;
+  }
+
+  .transaction-modal {
+    width: 95%;
+    padding: 16px;
+  }
+
+  .payment-section {
+    flex-direction: column;
+  }
+}

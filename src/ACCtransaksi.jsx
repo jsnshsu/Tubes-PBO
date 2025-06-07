@@ -140,9 +140,13 @@ const ACCtransaksi = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {transactions.map((item, idx) => (
+                  {transactions.map((item, idx) => (                   
                     <tr key={idx}>
-                      <td>{item.name}</td>
+                      <td>
+                        <Link to='/ProfileSettings'>
+                        {item.name}
+                        </Link>
+                      </td>
                       <td>{item.contact}</td>
                       <td>{item.bank}</td>
                       <td>{item.total}</td>
@@ -151,7 +155,7 @@ const ACCtransaksi = () => {
                           {item.status}
                         </span>
                       </td>
-                    </tr>
+                    </tr>                   
                   ))}
                 </tbody>
               </table>

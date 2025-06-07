@@ -26,7 +26,10 @@ import Preview from './preview.jsx'
 import './preview.css';
 import ACCtransaksi from './ACCtransaksi.jsx';
 import './ACCtransaksi.css';
-
+import DetailBarang from './detailBarang.jsx';
+import './detailBarang.css';
+import ViewTransaksi from './viewTransaksi.jsx';
+import './viewTransaksi.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -44,6 +47,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/lelang" element={<Lelang />} />
         <Route path="/preview" element={<Preview/>}></Route>
         <Route path="/ACCtransaksi" element={<ACCtransaksi />} />
+        <Route path="/detailBarang/:id" element={<DetailBarang />} />
+        <Route path="/viewTransaksi/:id" element={<ViewTransaksi />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
