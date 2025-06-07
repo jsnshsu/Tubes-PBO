@@ -30,27 +30,171 @@ const DetailBarang = () => {
         setProduct(data)
       } catch (error) {
         console.error("Error fetching product:", error)
-        // Fallback dummy data
-        setProduct({
-          id: 1,
-          name: "Pear Phone",
-          nickname: "Berry Blue",
-          basePrice: "Rp 900.000,-",
-          contactPerson: "08889889888",
-          status: "Not Active",
-          auctionStart: "12 Desember 2025, 14:00:00",
-          auctionEnd: "15 Desember 2025, 23:59:59",
-          increment: "Rp 100.000,-",
-          views: "100+",
-          shares: "100+",
-          description:
-            "Hadirilah kesempatan langka untuk memiliki Pear Phone, mahakarya teknologi yang memadukan keindahan dan performa. Desainnya yang elegan, kamera revolusioner, dan prosesor tercepat di kelasnya menjadikan Pear Phone bukan sekadar ponsel, melainkan simbol prestise.",
-          images: [
-            "/placeholder.svg?height=400&width=400",
-            "/placeholder.svg?height=400&width=400",
-            "/placeholder.svg?height=400&width=400",
-          ],
-        })
+        // Fallback dummy data berdasarkan ID
+        const dummyProducts = {
+          1: {
+            id: 1,
+            name: "Samsung Galaxy S21",
+            nickname: "Galaxy Blue",
+            basePrice: "Rp 7.500.000,-",
+            contactPerson: "08889889888",
+            status: "Not Active",
+            auctionStart: "01 Mei 2025, 14:00:00",
+            auctionEnd: "10 Mei 2025, 23:59:59",
+            increment: "Rp 100.000,-",
+            views: "150+",
+            shares: "80+",
+            description:
+              "Smartphone flagship Samsung dengan kamera canggih dan performa tinggi. Kondisi sangat baik dengan kelengkapan lengkap.",
+            images: [
+              "/placeholder.svg?height=400&width=400",
+              "/placeholder.svg?height=400&width=400",
+              "/placeholder.svg?height=400&width=400",
+            ],
+          },
+          2: {
+            id: 2,
+            name: "iPhone 14 Pro Max",
+            nickname: "Deep Purple",
+            basePrice: "Rp 12.000.000,-",
+            contactPerson: "08889889888",
+            status: "Active",
+            auctionStart: "15 Januari 2025, 14:00:00",
+            auctionEnd: "25 Januari 2025, 23:59:59",
+            increment: "Rp 200.000,-",
+            views: "200+",
+            shares: "120+",
+            description:
+              "iPhone terbaru dengan Dynamic Island dan kamera Pro yang revolusioner. Kondisi mint dengan garansi resmi.",
+            images: [
+              "/placeholder.svg?height=400&width=400",
+              "/placeholder.svg?height=400&width=400",
+              "/placeholder.svg?height=400&width=400",
+            ],
+          },
+          3: {
+            id: 3,
+            name: "MacBook Air M2",
+            nickname: "Midnight",
+            basePrice: "Rp 15.000.000,-",
+            contactPerson: "08889889888",
+            status: "Not Active",
+            auctionStart: "20 Februari 2025, 14:00:00",
+            auctionEnd: "28 Februari 2025, 23:59:59",
+            increment: "Rp 300.000,-",
+            views: "180+",
+            shares: "95+",
+            description:
+              "MacBook Air dengan chip M2 yang powerful dan efisien. Laptop tipis dan ringan untuk produktivitas maksimal.",
+            images: [
+              "/placeholder.svg?height=400&width=400",
+              "/placeholder.svg?height=400&width=400",
+              "/placeholder.svg?height=400&width=400",
+            ],
+          },
+          4: {
+            id: 4,
+            name: "PlayStation 5",
+            nickname: "White Edition",
+            basePrice: "Rp 8.000.000,-",
+            contactPerson: "08889889888",
+            status: "Not Active",
+            auctionStart: "10 Maret 2025, 14:00:00",
+            auctionEnd: "20 Maret 2025, 23:59:59",
+            increment: "Rp 150.000,-",
+            views: "300+",
+            shares: "200+",
+            description:
+              "Konsol gaming next-gen dengan performa luar biasa. Dilengkapi dengan controller DualSense dan game eksklusif.",
+            images: [
+              "/placeholder.svg?height=400&width=400",
+              "/placeholder.svg?height=400&width=400",
+              "/placeholder.svg?height=400&width=400",
+            ],
+          },
+          5: {
+            id: 5,
+            name: "Nintendo Switch OLED",
+            nickname: "Neon Red Blue",
+            basePrice: "Rp 4.500.000,-",
+            contactPerson: "08889889888",
+            status: "Not Active",
+            auctionStart: "05 April 2025, 14:00:00",
+            auctionEnd: "15 April 2025, 23:59:59",
+            increment: "Rp 100.000,-",
+            views: "250+",
+            shares: "150+",
+            description:
+              "Nintendo Switch dengan layar OLED yang vibrant. Konsol hybrid untuk gaming di rumah dan mobile.",
+            images: [
+              "/placeholder.svg?height=400&width=400",
+              "/placeholder.svg?height=400&width=400",
+              "/placeholder.svg?height=400&width=400",
+            ],
+          },
+          6: {
+            id: 6,
+            name: "iPad Pro 12.9 inch",
+            nickname: "Space Gray",
+            basePrice: "Rp 18.000.000,-",
+            contactPerson: "08889889888",
+            status: "Not Active",
+            auctionStart: "12 Juni 2025, 14:00:00",
+            auctionEnd: "22 Juni 2025, 23:59:59",
+            increment: "Rp 400.000,-",
+            views: "120+",
+            shares: "70+",
+            description:
+              "iPad Pro dengan chip M2 dan layar Liquid Retina XDR. Perfect untuk creative professional dan productivity.",
+            images: [
+              "/placeholder.svg?height=400&width=400",
+              "/placeholder.svg?height=400&width=400",
+              "/placeholder.svg?height=400&width=400",
+            ],
+          },
+          7: {
+            id: 7,
+            name: "Apple Watch Series 9",
+            nickname: "Midnight Aluminum",
+            basePrice: "Rp 6.000.000,-",
+            contactPerson: "08889889888",
+            status: "Active",
+            auctionStart: "07 Januari 2025, 14:00:00",
+            auctionEnd: "15 Januari 2025, 23:59:59",
+            increment: "Rp 100.000,-",
+            views: "400+",
+            shares: "250+",
+            description:
+              "Apple Watch terbaru dengan fitur kesehatan canggih dan performa yang lebih cepat. Smartwatch terbaik untuk gaya hidup aktif.",
+            images: [
+              "/placeholder.svg?height=400&width=400",
+              "/placeholder.svg?height=400&width=400",
+              "/placeholder.svg?height=400&width=400",
+            ],
+          },
+          8: {
+            id: 8,
+            name: "AirPods Pro 2nd Gen",
+            nickname: "White",
+            basePrice: "Rp 3.500.000,-",
+            contactPerson: "08889889888",
+            status: "Not Active",
+            auctionStart: "20 Maret 2025, 14:00:00",
+            auctionEnd: "30 Maret 2025, 23:59:59",
+            increment: "Rp 100.000,-",
+            views: "180+",
+            shares: "90+",
+            description:
+              "AirPods Pro dengan noise cancellation yang lebih baik dan kualitas suara yang ditingkatkan. Pengalaman audio premium.",
+            images: [
+              "/placeholder.svg?height=400&width=400",
+              "/placeholder.svg?height=400&width=400",
+              "/placeholder.svg?height=400&width=400",
+            ],
+          },
+        }
+
+        setProduct(dummyProducts[id] || dummyProducts[1])
       } finally {
         setLoading(false)
       }
@@ -71,12 +215,22 @@ const DetailBarang = () => {
         console.error("Error fetching related products:", error)
         // Fallback dummy data
         setRelatedProducts([
-          { id: 2, name: "Nama Barang", price: "Rp xxx.xxx,-", image: "/placeholder.svg?height=80&width=80" },
-          { id: 3, name: "Nama Barang", price: "Rp xxx.xxx,-", image: "/placeholder.svg?height=80&width=80" },
-          { id: 4, name: "Nama Barang", price: "Rp xxx.xxx,-", image: "/placeholder.svg?height=80&width=80" },
-          { id: 5, name: "Nama Barang", price: "Rp xxx.xxx,-", image: "/placeholder.svg?height=80&width=80" },
-          { id: 6, name: "Nama Barang", price: "Rp xxx.xxx,-", image: "/placeholder.svg?height=80&width=80" },
-          { id: 7, name: "Nama Barang", price: "Rp xxx.xxx,-", image: "/placeholder.svg?height=80&width=80" },
+          { id: 1, name: "Samsung Galaxy S21", price: "Rp 7.500.000,-", image: "/placeholder.svg?height=80&width=80" },
+          { id: 3, name: "MacBook Air M2", price: "Rp 15.000.000,-", image: "/placeholder.svg?height=80&width=80" },
+          { id: 4, name: "PlayStation 5", price: "Rp 8.000.000,-", image: "/placeholder.svg?height=80&width=80" },
+          {
+            id: 5,
+            name: "Nintendo Switch OLED",
+            price: "Rp 4.500.000,-",
+            image: "/placeholder.svg?height=80&width=80",
+          },
+          { id: 6, name: "iPad Pro 12.9 inch", price: "Rp 18.000.000,-", image: "/placeholder.svg?height=80&width=80" },
+          {
+            id: 7,
+            name: "Apple Watch Series 9",
+            price: "Rp 6.000.000,-",
+            image: "/placeholder.svg?height=80&width=80",
+          },
         ])
       }
     }
@@ -189,9 +343,11 @@ const DetailBarang = () => {
           </div>
 
           <div className="product-info">
-            <div className="status-badge not-active">{product.status}</div>
+            <div className={`status-badge ${product.status === "Active" ? "active" : "not-active"}`}>
+              {product.status}
+            </div>
 
-            <h1 className="product-title">{product.name}</h1>
+            <h1 className="product-title">{product.name || "Nama Produk"}</h1>
 
             <div className="price-info">
               <span className="price-label">Harga Dasar</span>
@@ -219,6 +375,15 @@ const DetailBarang = () => {
                 <span className="auction-value">{product.increment}</span>
               </div>
             </div>
+
+            {/* Tombol untuk masuk ke halaman lelang jika status Active */}
+            {product.status === "Active" && (
+              <div className="auction-action">
+                <Link to="/lelang" className="join-auction-btn">
+                  Ikut Lelang
+                </Link>
+              </div>
+            )}
           </div>
         </div>
 

@@ -2,65 +2,71 @@
 
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import "./ACCtransaksi.css"
+import "./listBarang.css"
 
-const ACCtransaksi = () => {
-  const [transactions, setTransactions] = useState([])
+const ListBarang = () => {
+  const [listings, setListings] = useState([])
   const [loading, setLoading] = useState(true)
+  const [searchTerm, setSearchTerm] = useState("")
 
   // Ambil data user dari localStorage
   const user = JSON.parse(localStorage.getItem("user")) || {}
   const username = user.name || "Nama Akun"
 
   useEffect(() => {
-    const fetchTransactions = async () => {
+    const fetchListings = async () => {
       try {
         setLoading(true)
-        const response = await fetch("http://localhost:3001/api/transactions", {
+        const response = await fetch("http://localhost:3001/api/user/listings", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            // Authorization: `Bearer ${localStorage.getItem("token")}`, // hapus jika tidak perlu
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-          // credentials: "include", // tambahkan jika backend pakai session cookies
         })
 
         if (!response.ok) {
-          throw new Error("Failed to fetch transactions")
+          throw new Error("Failed to fetch listings")
         }
 
         const data = await response.json()
-        setTransactions(data)
+        setListings(data)
       } catch (error) {
-        console.error("Error fetching transactions:", error)
-        // fallback dummy data
+        console.error("Error fetching listings:", error)
+        // fallback dummy data to match the design
         const dummyData = [
           {
+            id: 1,
             name: "Pear Phone",
-            contact: "08889888988",
-            bank: "BCA",
-            total: "Rp 1.900.000,-",
-            status: "Paid",
+            currentPrice: "Rp 1.900.000,-",
+            startDate: "12/12/2025",
+            endDate: "15/12/2025",
+            status: "Active",
           },
-          // ... bisa tambah dummy data lain
+          {
+            id: 2,
+            name: "Papaya Phone",
+            currentPrice: "Rp 2.000.000,-",
+            startDate: "16/12/2025",
+            endDate: "17/12/2025",
+            status: "Not Active",
+          },
         ]
-        setTransactions(dummyData)
+        setListings(dummyData)
       } finally {
         setLoading(false)
       }
     }
 
-    fetchTransactions()
+    fetchListings()
   }, [])
 
   const getStatusClass = (status) => {
     switch ((status || "").toLowerCase()) {
-      case "paid":
-        return "paid"
-      case "not paid":
-        return "not-paid"
-      case "pending":
-        return "pending"
+      case "active":
+        return "active"
+      case "not active":
+        return "not-active"
       default:
         return ""
     }
@@ -77,6 +83,8 @@ const ACCtransaksi = () => {
     // Redirect to dashboard
     window.location.href = "/"
   }
+
+  const filteredListings = listings.filter((item) => item.name.toLowerCase().includes(searchTerm.toLowerCase()))
 
   return (
     <div className="beranda-wrapper">
@@ -120,10 +128,10 @@ const ACCtransaksi = () => {
             <Link to="/ProfileSettings" className="sidebar-item">
               Pengaturan Profil
             </Link>
-            <Link to="/ACCtransaksi" className="sidebar-item active">
+            <Link to="/ACCtransaksi" className="sidebar-item">
               Transaksi
             </Link>
-            <Link to="/listBarang" className="sidebar-item">
+            <Link to="/listBarang" className="sidebar-item active">
               Listing
             </Link>
             <button
@@ -146,38 +154,70 @@ const ACCtransaksi = () => {
         </div>
 
         <div className="content">
-          <input className="search-bar" placeholder="Search..." />
+          <input
+            className="search-bar"
+            placeholder="Search..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
 
           {loading ? (
             <p style={{ color: "white" }}>Loading...</p>
-          ) : transactions.length === 0 ? (
-            <p style={{ color: "white" }}>No transactions found.</p>
           ) : (
             <div className="table-container">
-              <table className="transaction-table">
+              <table className="listing-table">
                 <thead>
                   <tr>
                     <th>Nama Barang</th>
-                    <th>Kontak</th>
-                    <th>Bank</th>
-                    <th>Total Transaksi</th>
+                    <th>Harga Terkini</th>
+                    <th>Tanggal Mulai</th>
+                    <th>Tanggal Berakhir</th>
                     <th>Status</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {transactions.map((item, idx) => (
-                    <tr key={idx}>
-                      <td>
-                        <Link to="/viewTransaksi/1">{item.name}</Link>
-                      </td>
-                      <td>{item.contact}</td>
-                      <td>{item.bank}</td>
-                      <td>{item.total}</td>
-                      <td>
-                        <span className={`status ${getStatusClass(item.status)}`}>{item.status}</span>
-                      </td>
-                    </tr>
-                  ))}
+                  {filteredListings.length === 0 ? (
+                    // Show empty rows when no data, matching the design
+                    <>
+                      {[...Array(8)].map((_, index) => (
+                        <tr key={`empty-${index}`}>
+                          <td>&nbsp;</td>
+                          <td>&nbsp;</td>
+                          <td>&nbsp;</td>
+                          <td>&nbsp;</td>
+                          <td>&nbsp;</td>
+                        </tr>
+                      ))}
+                    </>
+                  ) : (
+                    <>
+                      {filteredListings.map((item) => (
+                        <tr key={item.id}>
+                          <td>
+                            <Link to={`/listEdit/${item.id}`} className="item-name">
+                              {item.name}
+                            </Link>
+                          </td>
+                          <td>{item.currentPrice}</td>
+                          <td>{item.startDate}</td>
+                          <td>{item.endDate}</td>
+                          <td>
+                            <span className={`status ${getStatusClass(item.status)}`}>{item.status}</span>
+                          </td>
+                        </tr>
+                      ))}
+                      {/* Fill remaining rows to match design */}
+                      {[...Array(Math.max(0, 8 - filteredListings.length))].map((_, index) => (
+                        <tr key={`fill-${index}`}>
+                          <td>&nbsp;</td>
+                          <td>&nbsp;</td>
+                          <td>&nbsp;</td>
+                          <td>&nbsp;</td>
+                          <td>&nbsp;</td>
+                        </tr>
+                      ))}
+                    </>
+                  )}
                 </tbody>
               </table>
             </div>
@@ -188,4 +228,4 @@ const ACCtransaksi = () => {
   )
 }
 
-export default ACCtransaksi
+export default ListBarang

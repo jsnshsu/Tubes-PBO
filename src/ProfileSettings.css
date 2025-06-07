@@ -1,111 +1,110 @@
 body {
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: "Segoe UI", sans-serif;
   background: linear-gradient(to bottom, #0e0e0e, #3a2e10);
 }
 /* Container utama */
-  .beranda-wrapper {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-  
-  /* ======= HEADER ======= */
-  header {
-    position: relative;
-    background-color: #FFD700;
-    padding: 20px 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 2;
-  }
-  
-  .logo {
-    font-size: 28px;
-    font-weight: bold;
-    color: white;
-    z-index: 2;
-  }
-  
-  .right-side {
-    display: flex;
-    align-items: center;
-    gap: 30px;
-    z-index: 3;
-  }
-  
-  .menu {
-    display: flex;
-    gap: 20px;
-  }
-  
-  .menu-item {
-    text-decoration: none;
-    color: #000;
-    font-weight: bold;
-    transition: color 0.3s;
-  }
-  
-  .menu-item:hover {
-    color: white;
-  }
-  
-  .logo {
-    display: flex;
-    gap: 10px;
-  }
-  
-  .btn {
-    padding: 8px 16px;
-    border-radius: 6px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: all 0.3s ease;
-    font-size: 14px;
-  }
-  
-  .profil {
-    background-color: transparent;
-    color: black;
-    border: none;
-    width: 35px;
-    height: 35px;
-    cursor: pointer;
-  }
-  
-  
-  .notif {
-    background-color: transparent;
-    color: white;
-    border: none;
-    width: 35px;
-    height: 35px;
-    cursor: pointer;
-  }
-  
-  /* Background kuning & segitiga hitam */
-  .header-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #f4c13d;
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
-    z-index: -1;
-  }
-  
-  .header-bg-black {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #000000;
-    clip-path: polygon(0 0, 25% 100%, 0 100%);
-    z-index: 0;
-  }
+.beranda-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ======= HEADER ======= */
+header {
+  position: relative;
+  background-color: #ffd700;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 2;
+}
+
+.logo {
+  font-size: 28px;
+  font-weight: bold;
+  color: white;
+  z-index: 2;
+}
+
+.right-side {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  z-index: 3;
+}
+
+.menu {
+  display: flex;
+  gap: 20px;
+}
+
+.menu-item {
+  text-decoration: none;
+  color: #000;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.menu-item:hover {
+  color: white;
+}
+
+.logo {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  padding: 8px 16px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  font-size: 14px;
+}
+
+.profil {
+  background-color: transparent;
+  color: black;
+  border: none;
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+}
+
+.notif {
+  background-color: transparent;
+  color: white;
+  border: none;
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+}
+
+/* Background kuning & segitiga hitam */
+.header-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #f4c13d;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  z-index: -1;
+}
+
+.header-bg-black {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000000;
+  clip-path: polygon(0 0, 25% 100%, 0 100%);
+  z-index: 0;
+}
 
 .profile-page {
   display: flex;
@@ -141,6 +140,13 @@ body {
 .sidebar-item.logout {
   margin-top: auto;
   color: #ff6666;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.sidebar-item.logout:hover {
+  background-color: rgba(255, 102, 102, 0.2);
+  color: #ff4444;
 }
 
 .profile-content {
@@ -191,7 +197,8 @@ label {
   color: #ffcc47;
 }
 
-input, select {
+input,
+select {
   padding: 8px;
   border: none;
   border-radius: 5px;

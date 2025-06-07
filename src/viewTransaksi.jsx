@@ -33,7 +33,7 @@ const ViewTransaksi = () => {
           productImage: "/placeholder.svg?height=300&width=300",
           totalAmount: "Rp 2.900.000,-",
           contactPerson: "08889889888",
-          status: "Not Paid",
+          status: "Paid",
           seller: {
             name: "Asep Asepan",
             accountNumber: "1234 5678 9100",

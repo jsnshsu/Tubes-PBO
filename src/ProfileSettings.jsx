@@ -1,51 +1,65 @@
-import React, { useEffect, useState } from 'react';
-import './ProfileSettings.css';
-import { Link } from 'react-router-dom';
+"use client"
+
+import { useEffect, useState } from "react"
+import "./ProfileSettings.css"
+import { Link } from "react-router-dom"
 
 const ProfileSettings = () => {
   const [profile, setProfile] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    address: '',
-    bank: '',
-    accountName: '',
-    accountNumber: '',
-  });
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
+    bank: "",
+    accountName: "",
+    accountNumber: "",
+  })
 
   useEffect(() => {
     // Gantilah URL di bawah ini dengan endpoint API backend kamu
-    fetch('http://localhost:3001/api/user/profile')
+    fetch("http://localhost:3001/api/user/profile")
       .then((res) => res.json())
       .then((data) => {
-        setProfile(data);
+        setProfile(data)
       })
-      .catch((err) => console.error('Gagal fetch data profil:', err));
-  }, []);
+      .catch((err) => console.error("Gagal fetch data profil:", err))
+  }, [])
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setProfile((prevProfile) => ({
       ...prevProfile,
       [name]: value,
-    }));
-  };
+    }))
+  }
 
   const handleSave = () => {
     // Ganti URL dengan endpoint update profil milikmu
-    fetch('http://localhost:3001/api/user/profile', {
-      method: 'PUT',
+    fetch("http://localhost:3001/api/user/profile", {
+      method: "PUT",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(profile),
     })
       .then((res) => res.json())
       .then((data) => {
-        alert('Profil berhasil disimpan!');
+        alert("Profil berhasil disimpan!")
       })
-      .catch((err) => console.error('Gagal menyimpan profil:', err));
-  };
+      .catch((err) => console.error("Gagal menyimpan profil:", err))
+  }
+
+  const handleLogout = () => {
+    // Clear user data from localStorage
+    localStorage.removeItem("user")
+    localStorage.removeItem("token")
+
+    // Show confirmation message
+    alert("Anda telah berhasil logout!")
+
+    // Redirect to dashboard
+    window.location.href = "/"
+  }
 
   return (
     <div className="beranda-wrapper">
@@ -53,13 +67,23 @@ const ProfileSettings = () => {
         <h1 className="logo">EZBID</h1>
         <nav className="right-side">
           <div className="menu">
-            <Link to="/beranda_login" className="menu-item">Beranda</Link>
-            <Link to="#" className="menu-item">Titip Jual</Link>
-            <Link to="/FAQ" className="menu-item">FAQ</Link>
+            <Link to="/beranda_login" className="menu-item">
+              Beranda
+            </Link>
+            <Link to="/titip_jual" className="menu-item">
+              Titip Jual
+            </Link>
+            <Link to="/FAQ" className="menu-item">
+              FAQ
+            </Link>
           </div>
           <div className="logo">
-            <Link to="#"><img src='/Bell.svg' alt="Notifikasi" className='notif' /></Link>
-            <Link to="ProfileSettings"><img src='/account_circle.svg' alt="Profil" className='profil' /></Link>
+            <Link to="/notif">
+              <img src="/Bell.svg" alt="Notifikasi" className="notif" />
+            </Link>
+            <Link to="/ProfileSettings">
+              <img src="/account_circle.svg" alt="Profil" className="profil" />
+            </Link>
           </div>
         </nav>
         <div className="header-bg"></div>
@@ -68,10 +92,31 @@ const ProfileSettings = () => {
 
       <div className="profile-page">
         <div className="sidebar">
-          <Link to='/ProfileSettings'className='sidebar-item'>Pengaturan Profil</Link>
-          <Link to='/ACCtransaksi' className='sidebar-item'> Transaksi</Link>
-          <Link to='#' className='sidebar-item'>Listing</Link>
-          <Link to='#' className='sidebar-item'>Logout</Link>
+          <Link to="/ProfileSettings" className="sidebar-item">
+            Pengaturan Profil
+          </Link>
+          <Link to="/ACCtransaksi" className="sidebar-item">
+            Transaksi
+          </Link>
+          <Link to="/listBarang" className="sidebar-item">
+            Listing
+          </Link>
+          <button
+            onClick={handleLogout}
+            className="sidebar-item logout"
+            style={{
+              background: "none",
+              border: "none",
+              textAlign: "left",
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+            }}
+          >
+            <span>🚪</span>
+            Log out
+          </button>
         </div>
 
         <div className="profile-content">
@@ -105,18 +150,32 @@ const ProfileSettings = () => {
                   <option value="Mandiri">Mandiri</option>
                 </select>
                 <label>Rekening</label>
-                <input type="text" name="accountName" value={profile.accountName} onChange={handleChange} placeholder="Nama Pemilik Rekening" />
+                <input
+                  type="text"
+                  name="accountName"
+                  value={profile.accountName}
+                  onChange={handleChange}
+                  placeholder="Nama Pemilik Rekening"
+                />
                 <label>No. Rekening</label>
-                <input type="text" name="accountNumber" value={profile.accountNumber} onChange={handleChange} placeholder="Nomor Rekening" />
+                <input
+                  type="text"
+                  name="accountNumber"
+                  value={profile.accountNumber}
+                  onChange={handleChange}
+                  placeholder="Nomor Rekening"
+                />
               </div>
             </div>
 
-            <button className="save-button" onClick={handleSave}>Simpan</button>
+            <button className="save-button" onClick={handleSave}>
+              Simpan
+            </button>
           </div>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ProfileSettings;
+export default ProfileSettings

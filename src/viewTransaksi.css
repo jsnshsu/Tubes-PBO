@@ -122,7 +122,7 @@
 }
 
 .status-badge.not-paid {
-  background-color: #dc3545;
+  background-color: green;
   color: white;
 }
 

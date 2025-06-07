@@ -1,10 +1,3 @@
-.acc-container {
-  display: flex;
-  height: 100vh;
-  background: linear-gradient(to bottom, #000000, #5a3b07);
-  font-family: sans-serif;
-}
-
 /* Reset and base styles */
 body,
 html {
@@ -220,13 +213,13 @@ header {
   overflow: hidden;
 }
 
-.transaction-table {
+.listing-table {
   width: 100%;
   border-collapse: collapse;
   background-color: transparent;
 }
 
-.transaction-table th {
+.listing-table th {
   background-color: #444;
   color: white;
   padding: 15px 20px;
@@ -236,15 +229,15 @@ header {
   font-size: 14px;
 }
 
-.transaction-table th:first-child {
+.listing-table th:first-child {
   border-top-left-radius: 10px;
 }
 
-.transaction-table th:last-child {
+.listing-table th:last-child {
   border-top-right-radius: 10px;
 }
 
-.transaction-table td {
+.listing-table td {
   padding: 15px 20px;
   text-align: left;
   background-color: #3a3a3a;
@@ -253,16 +246,27 @@ header {
   font-size: 14px;
 }
 
-.transaction-table tr:last-child td {
+.listing-table tr:last-child td {
   border-bottom: none;
 }
 
-.transaction-table tr:last-child td:first-child {
+.listing-table tr:last-child td:first-child {
   border-bottom-left-radius: 10px;
 }
 
-.transaction-table tr:last-child td:last-child {
+.listing-table tr:last-child td:last-child {
   border-bottom-right-radius: 10px;
+}
+
+.item-name {
+  color: #f4c13d;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.item-name:hover {
+  color: #ffdb6e;
+  text-decoration: underline;
 }
 
 /* Status styling */
@@ -275,19 +279,14 @@ header {
   min-width: 80px;
 }
 
-.status.paid {
+.status.active {
   color: #00ff00;
   background-color: rgba(0, 255, 0, 0.1);
 }
 
-.status.not-paid {
+.status.not-active {
   color: #ff4444;
   background-color: rgba(255, 68, 68, 0.1);
-}
-
-.status.pending {
-  color: #ffaa00;
-  background-color: rgba(255, 170, 0, 0.1);
 }
 
 /* Responsive design */
