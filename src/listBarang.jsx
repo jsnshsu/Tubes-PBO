@@ -2,70 +2,46 @@
 
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
+import { apiClient, API_ENDPOINTS } from "./config/api"
+import { authUtils } from "./utils/auth"
+import { formatUtils } from "./utils/format"
 import "./listBarang.css"
 
 const ListBarang = () => {
   const [listings, setListings] = useState([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState("")
   const [searchTerm, setSearchTerm] = useState("")
 
-  // Ambil data user dari localStorage
-  const user = JSON.parse(localStorage.getItem("user")) || {}
-  const username = user.name || "Nama Akun"
+  const user = authUtils.getCurrentUser()
+  const username = user?.name || "Nama Akun"
 
   useEffect(() => {
-    const fetchListings = async () => {
-      try {
-        setLoading(true)
-        const response = await fetch("http://localhost:3001/api/user/listings", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        })
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch listings")
-        }
-
-        const data = await response.json()
-        setListings(data)
-      } catch (error) {
-        console.error("Error fetching listings:", error)
-        // fallback dummy data to match the design
-        const dummyData = [
-          {
-            id: 1,
-            name: "Pear Phone",
-            currentPrice: "Rp 1.900.000,-",
-            startDate: "12/12/2025",
-            endDate: "15/12/2025",
-            status: "Active",
-          },
-          {
-            id: 2,
-            name: "Papaya Phone",
-            currentPrice: "Rp 2.000.000,-",
-            startDate: "16/12/2025",
-            endDate: "17/12/2025",
-            status: "Not Active",
-          },
-        ]
-        setListings(dummyData)
-      } finally {
-        setLoading(false)
-      }
-    }
-
     fetchListings()
   }, [])
+
+  const fetchListings = async () => {
+    try {
+      setLoading(true)
+      setError("")
+
+      const response = await apiClient.get(API_ENDPOINTS.USER_LISTINGS)
+      setListings(response.data || [])
+    } catch (error) {
+      console.error("Error fetching listings:", error)
+      setError("Gagal memuat data listing")
+      setListings([])
+    } finally {
+      setLoading(false)
+    }
+  }
 
   const getStatusClass = (status) => {
     switch ((status || "").toLowerCase()) {
       case "active":
         return "active"
       case "not active":
+      case "inactive":
         return "not-active"
       default:
         return ""
@@ -73,18 +49,10 @@ const ListBarang = () => {
   }
 
   const handleLogout = () => {
-    // Clear user data from localStorage
-    localStorage.removeItem("user")
-    localStorage.removeItem("token")
-
-    // Show confirmation message
-    alert("Anda telah berhasil logout!")
-
-    // Redirect to dashboard
-    window.location.href = "/"
+    authUtils.logout()
   }
 
-  const filteredListings = listings.filter((item) => item.name.toLowerCase().includes(searchTerm.toLowerCase()))
+  const filteredListings = listings.filter((item) => (item.name || "").toLowerCase().includes(searchTerm.toLowerCase()))
 
   return (
     <div className="beranda-wrapper">
@@ -156,13 +124,15 @@ const ListBarang = () => {
         <div className="content">
           <input
             className="search-bar"
-            placeholder="Search..."
+            placeholder="Cari listing..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
 
           {loading ? (
-            <p style={{ color: "white" }}>Loading...</p>
+            <div style={{ color: "white", textAlign: "center", padding: "50px" }}>Loading listings...</div>
+          ) : error ? (
+            <div style={{ color: "#ff6666", textAlign: "center", padding: "50px" }}>{error}</div>
           ) : (
             <div className="table-container">
               <table className="listing-table">
@@ -177,15 +147,14 @@ const ListBarang = () => {
                 </thead>
                 <tbody>
                   {filteredListings.length === 0 ? (
-                    // Show empty rows when no data, matching the design
                     <>
                       {[...Array(8)].map((_, index) => (
                         <tr key={`empty-${index}`}>
-                          <td>&nbsp;</td>
-                          <td>&nbsp;</td>
-                          <td>&nbsp;</td>
-                          <td>&nbsp;</td>
-                          <td>&nbsp;</td>
+                          <td colSpan="5" style={{ textAlign: "center", padding: "20px" }}>
+                            {index === 0 &&
+                              (searchTerm ? "Tidak ada listing yang sesuai pencarian" : "Belum ada listing")}
+                            {index > 0 && "\u00A0"}
+                          </td>
                         </tr>
                       ))}
                     </>
@@ -198,15 +167,14 @@ const ListBarang = () => {
                               {item.name}
                             </Link>
                           </td>
-                          <td>{item.currentPrice}</td>
-                          <td>{item.startDate}</td>
-                          <td>{item.endDate}</td>
+                          <td>{formatUtils.formatPrice(item.currentPrice || item.basePrice)}</td>
+                          <td>{formatUtils.formatDate(item.startDate)}</td>
+                          <td>{formatUtils.formatDate(item.endDate)}</td>
                           <td>
                             <span className={`status ${getStatusClass(item.status)}`}>{item.status}</span>
                           </td>
                         </tr>
                       ))}
-                      {/* Fill remaining rows to match design */}
                       {[...Array(Math.max(0, 8 - filteredListings.length))].map((_, index) => (
                         <tr key={`fill-${index}`}>
                           <td>&nbsp;</td>

@@ -2,62 +2,47 @@
 
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
+import { apiClient, API_ENDPOINTS } from "./config/api"
+import { authUtils } from "./utils/auth"
+import { formatUtils } from "./utils/format"
 import "./ACCtransaksi.css"
 
 const ACCtransaksi = () => {
   const [transactions, setTransactions] = useState([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState("")
+  const [searchTerm, setSearchTerm] = useState("")
 
-  // Ambil data user dari localStorage
-  const user = JSON.parse(localStorage.getItem("user")) || {}
-  const username = user.name || "Nama Akun"
+  const user = authUtils.getCurrentUser()
+  const username = user?.name || "Nama Akun"
 
   useEffect(() => {
-    const fetchTransactions = async () => {
-      try {
-        setLoading(true)
-        const response = await fetch("http://localhost:3001/api/transactions", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            // Authorization: `Bearer ${localStorage.getItem("token")}`, // hapus jika tidak perlu
-          },
-          // credentials: "include", // tambahkan jika backend pakai session cookies
-        })
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch transactions")
-        }
-
-        const data = await response.json()
-        setTransactions(data)
-      } catch (error) {
-        console.error("Error fetching transactions:", error)
-        // fallback dummy data
-        const dummyData = [
-          {
-            name: "Pear Phone",
-            contact: "08889888988",
-            bank: "BCA",
-            total: "Rp 1.900.000,-",
-            status: "Paid",
-          },
-          // ... bisa tambah dummy data lain
-        ]
-        setTransactions(dummyData)
-      } finally {
-        setLoading(false)
-      }
-    }
-
     fetchTransactions()
   }, [])
+
+  const fetchTransactions = async () => {
+    try {
+      setLoading(true)
+      setError("")
+
+      const response = await apiClient.get(API_ENDPOINTS.TRANSACTIONS)
+      setTransactions(response.data || [])
+    } catch (error) {
+      console.error("Error fetching transactions:", error)
+      setError("Gagal memuat data transaksi")
+      setTransactions([])
+    } finally {
+      setLoading(false)
+    }
+  }
 
   const getStatusClass = (status) => {
     switch ((status || "").toLowerCase()) {
       case "paid":
+      case "lunas":
         return "paid"
       case "not paid":
+      case "belum lunas":
         return "not-paid"
       case "pending":
         return "pending"
@@ -67,16 +52,12 @@ const ACCtransaksi = () => {
   }
 
   const handleLogout = () => {
-    // Clear user data from localStorage
-    localStorage.removeItem("user")
-    localStorage.removeItem("token")
-
-    // Show confirmation message
-    alert("Anda telah berhasil logout!")
-
-    // Redirect to dashboard
-    window.location.href = "/"
+    authUtils.logout()
   }
+
+  const filteredTransactions = transactions.filter((item) =>
+    (item.productName || item.name || "").toLowerCase().includes(searchTerm.toLowerCase()),
+  )
 
   return (
     <div className="beranda-wrapper">
@@ -146,12 +127,17 @@ const ACCtransaksi = () => {
         </div>
 
         <div className="content">
-          <input className="search-bar" placeholder="Search..." />
+          <input
+            className="search-bar"
+            placeholder="Cari transaksi..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
 
           {loading ? (
-            <p style={{ color: "white" }}>Loading...</p>
-          ) : transactions.length === 0 ? (
-            <p style={{ color: "white" }}>No transactions found.</p>
+            <div style={{ color: "white", textAlign: "center", padding: "50px" }}>Loading transaksi...</div>
+          ) : error ? (
+            <div style={{ color: "#ff6666", textAlign: "center", padding: "50px" }}>{error}</div>
           ) : (
             <div className="table-container">
               <table className="transaction-table">
@@ -165,19 +151,29 @@ const ACCtransaksi = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {transactions.map((item, idx) => (
-                    <tr key={idx}>
-                      <td>
-                        <Link to="/viewTransaksi/1">{item.name}</Link>
-                      </td>
-                      <td>{item.contact}</td>
-                      <td>{item.bank}</td>
-                      <td>{item.total}</td>
-                      <td>
-                        <span className={`status ${getStatusClass(item.status)}`}>{item.status}</span>
+                  {filteredTransactions.length === 0 ? (
+                    <tr>
+                      <td colSpan="5" style={{ textAlign: "center", padding: "50px" }}>
+                        {searchTerm ? "Tidak ada transaksi yang sesuai pencarian" : "Belum ada transaksi"}
                       </td>
                     </tr>
-                  ))}
+                  ) : (
+                    filteredTransactions.map((item) => (
+                      <tr key={item.id}>
+                        <td>
+                          <Link to={`/viewTransaksi/${item.id}`} style={{ color: "#f4c13d", textDecoration: "none" }}>
+                            {item.productName || item.name}
+                          </Link>
+                        </td>
+                        <td>{item.contact || item.contactPerson}</td>
+                        <td>{item.bank}</td>
+                        <td>{formatUtils.formatPrice(item.totalAmount || item.total)}</td>
+                        <td>
+                          <span className={`status ${getStatusClass(item.status)}`}>{item.status}</span>
+                        </td>
+                      </tr>
+                    ))
+                  )}
                 </tbody>
               </table>
             </div>
