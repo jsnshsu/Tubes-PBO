@@ -10,7 +10,7 @@ const FAQ = () => {
         <nav className="right-side">
           <div className="menu">
             <Link to="/beranda_login" className="menu-item">Beranda</Link>
-            <Link to="#" className="menu-item">Titip Jual</Link>
+            <Link to="/titip_jual" className="menu-item">Titip Jual</Link>
             <Link to="/FAQ" className="menu-item">FAQ</Link>
           </div>
           <div className="auth">

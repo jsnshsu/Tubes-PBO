@@ -2,103 +2,90 @@
 
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import "./ACCtransaksi.css"
+import "./beranda.css"
 
-const ACCtransaksi = () => {
-  const [transactions, setTransactions] = useState([])
+const Beranda = () => {
+  const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
-
-  // Ambil data user dari localStorage
-  const user = JSON.parse(localStorage.getItem("user")) || {}
-  const username = user.name || "Nama Akun"
+  const [categoryFilter, setCategoryFilter] = useState("")
+  const [priceFilter, setPriceFilter] = useState("")
 
   useEffect(() => {
-    const fetchTransactions = async () => {
-      try {
-        setLoading(true)
-        const response = await fetch("http://localhost:3001/api/transactions", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            // Authorization: `Bearer ${localStorage.getItem("token")}`, // hapus jika tidak perlu
-          },
-          // credentials: "include", // tambahkan jika backend pakai session cookies
-        })
+    fetchProducts()
+  }, [categoryFilter, priceFilter])
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch transactions")
-        }
+  const fetchProducts = async () => {
+    try {
+      setLoading(true)
 
-        const data = await response.json()
-        setTransactions(data)
-      } catch (error) {
-        console.error("Error fetching transactions:", error)
-        // fallback dummy data
-        const dummyData = [
-          {
-            name: "Pear Phone",
-            contact: "08889888988",
-            bank: "BCA",
-            total: "Rp 1.900.000,-",
-            status: "Paid",
-          },
-          // ... bisa tambah dummy data lain
-        ]
-        setTransactions(dummyData)
-      } finally {
-        setLoading(false)
+      // Fetch products from API (public endpoint)
+      let url = "http://localhost:3001/api/products"
+      const params = new URLSearchParams()
+
+      if (categoryFilter) params.append("category", categoryFilter)
+      if (priceFilter) params.append("priceRange", priceFilter)
+
+      if (params.toString()) {
+        url += `?${params.toString()}`
       }
-    }
 
-    fetchTransactions()
-  }, [])
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
 
-  const getStatusClass = (status) => {
-    switch ((status || "").toLowerCase()) {
-      case "paid":
-        return "paid"
-      case "not paid":
-        return "not-paid"
-      case "pending":
-        return "pending"
-      default:
-        return ""
+      if (!response.ok) {
+        throw new Error("Failed to fetch products")
+      }
+
+      const data = await response.json()
+      setProducts(data.content || [])
+    } catch (error) {
+      console.error("Error fetching products:", error)
+      setProducts([])
+    } finally {
+      setLoading(false)
     }
   }
 
-  const handleLogout = () => {
-    // Clear user data from localStorage
-    localStorage.removeItem("user")
-    localStorage.removeItem("token")
+  const formatPrice = (price) => {
+    if (!price) return "Rp xxx.xxx,-"
+    return `Rp ${price.toLocaleString("id-ID")},-`
+  }
 
-    // Redirect to dashboard
-    window.location.href = "/"
+  const formatDate = (dateString) => {
+    if (!dateString) return "12 Desember 2024"
+    const date = new Date(dateString)
+    return date.toLocaleDateString("id-ID", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    })
   }
 
   return (
     <div className="beranda-wrapper">
       <header>
-        <Link to="/beranda_login" className="logo-header">
+        <Link to="/" className="logo">
           EZBID
         </Link>
         <nav className="right-side">
           <div className="menu">
-            <Link to="/beranda_login" className="menu-item">
+            <Link to="/beranda" className="menu-item">
               Beranda
-            </Link>
-            <Link to="/titip_jual" className="menu-item">
-              Titip Jual
             </Link>
             <Link to="/FAQ" className="menu-item">
               FAQ
             </Link>
           </div>
-          <div className="logo-container">
-            <Link to="/notif">
-              <img src="/Bell.svg" alt="Notifikasi" className="notif" />
+          <div className="auth">
+            <Link to="/login" className="btn login">
+              Login
             </Link>
-            <Link to="/ProfileSettings">
-              <img src="/account_circle.svg" alt="Profil" className="profil" />
+            <Link to="/signin" className="btn signup">
+              Sign Up
             </Link>
           </div>
         </nav>
@@ -106,74 +93,86 @@ const ACCtransaksi = () => {
         <div className="header-bg-black"></div>
       </header>
 
-      <div className="main-content">
-        <div className="sidebar">
-          <div className="profile-section">
-            <div className="profile-icon">👤</div>
-            <div className="profile-name">{username}</div>
-          </div>
+      <div className="beranda-content">
+        {/* Filter Section */}
+        <div className="filter-section">
+          <select
+            className="filter-dropdown"
+            value={categoryFilter}
+            onChange={(e) => setCategoryFilter(e.target.value)}
+          >
+            <option value="">Semua Kategori</option>
+            <option value="Elektronik">Elektronik</option>
+            <option value="Fashion">Fashion</option>
+            <option value="Gaming">Gaming</option>
+            <option value="Audio">Audio</option>
+          </select>
 
-          <div className="sidebar-menu">
-            <Link to="/ProfileSettings" className="sidebar-item">
-              Pengaturan Profil
-            </Link>
-            <Link to="/ACCtransaksi" className="sidebar-item active">
-              Transaksi
-            </Link>
-            <Link to="/listBarang" className="sidebar-item">
-              Listing
-            </Link>
-            <button
-              onClick={handleLogout}
-              className="sidebar-item logout"
-              style={{ background: "none", border: "none", textAlign: "left", width: "100%" }}
-            >
-              Log out
-            </button>
-          </div>
+          <select className="filter-dropdown" value={priceFilter} onChange={(e) => setPriceFilter(e.target.value)}>
+            <option value="">Semua Harga</option>
+            <option value="0-1000000">Di bawah 1 Juta</option>
+            <option value="1000000-5000000">1 - 5 Juta</option>
+            <option value="5000000-10000000">5 - 10 Juta</option>
+            <option value="10000000-999999999">Di atas 10 Juta</option>
+          </select>
         </div>
 
-        <div className="content">
-          <input className="search-bar" placeholder="Search..." />
+        {/* Products Grid */}
+        {loading ? (
+          <div style={{ textAlign: "center", padding: "50px", color: "#666" }}>Loading products...</div>
+        ) : products.length === 0 ? (
+          <div style={{ textAlign: "center", padding: "50px", color: "#666" }}>Tidak ada produk ditemukan</div>
+        ) : (
+          <div className="card-grid">
+            {products.map((product) => (
+              <div key={product.id} className="card">
+                <div className="card-image">
+                  <img
+                    src={product.images?.[0] || "/placeholder.svg?height=150&width=250"}
+                    alt={product.name}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      borderRadius: "8px",
+                    }}
+                  />
+                </div>
 
-          {loading ? (
-            <p style={{ color: "white" }}>Loading...</p>
-          ) : transactions.length === 0 ? (
-            <p style={{ color: "white" }}>No transactions found.</p>
-          ) : (
-            <div className="table-container">
-              <table className="transaction-table">
-                <thead>
-                  <tr>
-                    <th>Nama Barang</th>
-                    <th>Kontak</th>
-                    <th>Bank</th>
-                    <th>Total Transaksi</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {transactions.map((item, idx) => (
-                    <tr key={idx}>
-                      <td>
-                        <Link to="/viewTransaksi/1">{item.name}</Link>
-                      </td>
-                      <td>{item.contact}</td>
-                      <td>{item.bank}</td>
-                      <td>{item.total}</td>
-                      <td>
-                        <span className={`status ${getStatusClass(item.status)}`}>{item.status}</span>
-                      </td>
-                    </tr>
+                <div className="card-indicators">
+                  {[1, 2, 3].map((dot) => (
+                    <div key={dot} className="indicator"></div>
                   ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-        </div>
+                </div>
+
+                <div className="card-title">{product.name}</div>
+                <div className="card-category">{product.category}</div>
+                <div className="card-price">{formatPrice(product.basePrice)}</div>
+                <div className="card-date">Berakhir: {formatDate(product.endDate)}</div>
+
+                {/* Pesan untuk login */}
+                <div
+                  style={{
+                    marginTop: "10px",
+                    padding: "8px",
+                    backgroundColor: "#f0f0f0",
+                    borderRadius: "5px",
+                    textAlign: "center",
+                    fontSize: "12px",
+                    color: "#666",
+                  }}
+                >
+                  <Link to="/login" style={{ color: "#f4c13d", textDecoration: "none" }}>
+                    Login untuk melihat detail
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   )
 }
 
-export default ACCtransaksi
+export default Beranda
