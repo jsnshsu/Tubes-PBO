@@ -14,7 +14,7 @@ const FAQ = () => {
             <Link to="/FAQ" className="menu-item">FAQ</Link>
           </div>
           <div className="auth">
-            <Link to="#" ><img src='/Bell.svg' alt="Notifikasi" className='notif' /></Link>
+            <Link to="/notif" ><img src='/Bell.svg' alt="Notifikasi" className='notif' /></Link>
             <Link to="/ProfileSettings" ><img src='/account_circle.svg' alt="Profil" className='profil' /></Link>
           </div>
         </nav>
